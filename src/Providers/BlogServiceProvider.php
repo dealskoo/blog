@@ -23,6 +23,8 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if ($this->app->runningInConsole()) {
+
+        }
     }
 }

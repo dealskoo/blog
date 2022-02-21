@@ -40,6 +40,8 @@
     },
     "require": {
         "php": ">=7.1",
+        "dealskoo/admin": "dev-master",
+        "dealskoo/country": "dev-master",
         "laravel/framework": ">=7.20"
     },
     "require-dev": {
