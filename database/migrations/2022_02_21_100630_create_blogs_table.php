@@ -23,6 +23,7 @@ class CreateBlogsTable extends Migration
             $table->boolean('can_comment')->default(true);
             $table->unsignedBigInteger('country_id');
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('country_id')->references('id')->on('countries')->onUpdate('cascade')->onDelete('cascade');
         });
     }

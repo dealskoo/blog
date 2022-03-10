@@ -7,11 +7,12 @@ use Dealskoo\Country\Traits\HasCountry;
 use Dealskoo\Tag\Traits\Taggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Blog extends Model
 {
-    use HasFactory, HasCountry, Taggable, Commentable;
+    use HasFactory, HasCountry, Taggable, Commentable, SoftDeletes;
 
     protected $appends = [
         'cover_url'
