@@ -16,7 +16,7 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->mergeConfigFrom(__DIR__ . '/../../config/blog.php', 'blog');
     }
 
     /**
@@ -28,6 +28,10 @@ class BlogServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+
+            $this->publishes([
+                __DIR__ . '/../../config/blog.php' => config_path('blog.php')
+            ], 'config');
 
             $this->publishes([
                 __DIR__ . '/../../resources/lang' => resource_path('lang/vendor/blog')
@@ -43,9 +47,9 @@ class BlogServiceProvider extends ServiceProvider
         AdminMenu::route('admin.blogs.index', 'blog::blog.blogs', [], ['icon' => 'uil-file-alt', 'permission' => 'blogs.index'])->order(4);
 
         PermissionManager::add(new Permission('blogs.index', 'Blog Lists'));
+        PermissionManager::add(new Permission('blogs.create', 'Create Blog'), 'blogs.index');
         PermissionManager::add(new Permission('blogs.show', 'View Blog'), 'blogs.index');
         PermissionManager::add(new Permission('blogs.edit', 'Edit Blog'), 'blogs.index');
         PermissionManager::add(new Permission('blogs.destroy', 'Destroy Blog'), 'blogs.index');
-
     }
 }

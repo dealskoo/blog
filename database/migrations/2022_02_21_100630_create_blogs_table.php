@@ -21,6 +21,7 @@ class CreateBlogsTable extends Migration
             $table->text('content')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->boolean('can_comment')->default(true);
+            $table->integer('views')->default(0);
             $table->unsignedBigInteger('country_id');
             $table->timestamps();
             $table->softDeletes();

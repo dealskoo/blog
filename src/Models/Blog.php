@@ -25,6 +25,7 @@ class Blog extends Model
         'content',
         'published_at',
         'can_comment',
+        'views',
         'country_id'
     ];
 
