@@ -46,8 +46,11 @@
                                                value="{{ old('slug') }}" tabindex="2"
                                                placeholder="{{ __('blog::blog.slug_placeholder') }}">
                                     </div>
-                                    <div class="col-12 mb-3">
-
+                                    <div class="col-12">
+                                        <div id="editor">
+                                            <textarea name="content"
+                                                      style="display: none">{{ old('content') }}</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -111,4 +114,41 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('css')
+    <link href="{{ asset('/vendor/admin/css/vendor/editormd.min.css') }}" rel="stylesheet" type="text/css"/>
+@endsection
+@section('script')
+    <script src="{{ asset('/vendor/admin/js/vendor/editormd.js') }}"></script>
+    <script type="text/javascript">
+        $(function () {
+            let path = '/vendor/admin/js/vendor';
+            let editor = editormd("editor", {
+                mode: "markdown",
+                width: "100%",
+                height: 800,
+                watch: false,
+                path: path + "/lib/",
+                toolbarIcons: function () {
+                    return [
+                        "undo", "redo", "|",
+                        "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
+                        "h1", "h2", "h3", "h4", "h5", "h6", "|",
+                        "list-ul", "list-ol", "hr", "|",
+                        "link", "reference-link", "image", "code", "code-block", "table", "datetime", "pagebreak", "|",
+                        "watch", "preview", "fullscreen", "clear", "search"
+                    ];
+                },
+                onload: function () {
+                    let lang = "{{ str_replace('_', '-', app()->getLocale()) }}";
+                    if (lang !== 'zh-CN') {
+                        editormd.loadScript(path + '/languages/' + lang, function () {
+                            editor.lang = editormd.defaults.lang;
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
