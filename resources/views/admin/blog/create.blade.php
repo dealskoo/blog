@@ -46,10 +46,23 @@
                                                value="{{ old('slug') }}" tabindex="2"
                                                placeholder="{{ __('blog::blog.slug_placeholder') }}">
                                     </div>
+                                    <div class="col-12 mb-3">
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <div class="cover-box">
+                                            <img src="{{ asset(config('blog.default_cover')) }}"
+                                                 class="img-thumbnail file-pic file-cover">
+                                            <div class="upload-image">
+                                                <i class="mdi mdi-cloud-upload upload-btn upload-cover-btn"></i>
+                                                <input class="file-input" name="cover" type="file" accept="image/*"/>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-12 mb-3">
                                         <select id="country_id" name="country_id" class="form-control select2"
                                                 data-toggle="select2" tabindex="3">
@@ -58,9 +71,17 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control tag-input" id="tag" name="tag"
+                                               value="{{ old('tag') }}"
+                                               placeholder="{{ __('blog::blog.tag_placeholder') }}">
+                                        <div class="mt-1 tags-box">
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="can_comment" name="can_comment"
+                                            <input type="checkbox" class="form-check-input" id="can_comment"
+                                                   name="can_comment"
                                                    tabindex="15"
                                                    value="1">
                                             <label for="can_comment"
@@ -69,7 +90,8 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="published" name="published"
+                                            <input type="checkbox" class="form-check-input" id="published"
+                                                   name="published"
                                                    tabindex="15"
                                                    value="1">
                                             <label for="published"
