@@ -70,7 +70,12 @@
                                         <select id="country_id" name="country_id" class="form-control select2"
                                                 data-toggle="select2" tabindex="3">
                                             @foreach($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                @if(old('country_id') == $country->id)
+                                                    <option value="{{ $country->id }}"
+                                                            selected>{{ $country->name }}</option>
+                                                @else
+                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>

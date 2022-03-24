@@ -130,7 +130,9 @@ class BlogController extends AdminController
     public function edit(Request $request, $id)
     {
         abort_if(!$request->user()->canDo('blogs.edit'), 403);
-
+        $blog = Blog::query()->findOrFail($id);
+        $countries = Country::all();
+        return view('blog::admin.blog.edit', ['countries' => $countries, 'blog' => $blog]);
     }
 
     public function update(Request $request, $id)

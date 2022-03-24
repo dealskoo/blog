@@ -3,6 +3,7 @@ return [
     'blogs' => 'Blogs',
     'blogs_list' => 'Blogs List',
     'add_blog' => 'Add Blog',
+    'edit_blog' => 'Edit Blog',
     'id' => 'ID',
     'title' => 'Title',
     'country' => 'Country',

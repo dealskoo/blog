@@ -3,6 +3,7 @@ return [
     'blogs' => '博客',
     'blogs_list' => '博客列表',
     'add_blog' => '添加博客',
+    'edit_blog' => '编辑博客',
     'id' => '编号',
     'title' => '标题',
     'country' => '国家',
