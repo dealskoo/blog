@@ -4,8 +4,10 @@ namespace Dealskoo\Blog\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
+use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Blog\Models\Blog;
 use Dealskoo\Country\Models\Country;
+use Dealskoo\Tag\Models\Tag;
 use Illuminate\Http\Request;
 
 class BlogController extends AdminController
@@ -47,7 +49,7 @@ class BlogController extends AdminController
             $row[] = $blog->country->name;
             $row[] = $blog->can_comment;
             $row[] = $blog->views;
-            $row[] = Carbon::parse($blog->published_at)->format('Y-m-d H:i:s');
+            $row[] = $blog->published_at != null ? Carbon::parse($blog->published_at)->format('Y-m-d H:i:s') : null;
             $row[] = Carbon::parse($blog->created_at)->format('Y-m-d H:i:s');
             $row[] = Carbon::parse($blog->updated_at)->format('Y-m-d H:i:s');
             $view_link = '';
@@ -90,21 +92,56 @@ class BlogController extends AdminController
 
     public function store(Request $request)
     {
+        abort_if(!$request->user()->canDo('blogs.create'), 403);
+        $request->validate([
+            'title' => ['required', 'string'],
+            'slug' => ['required', new Slug('blogs', 'slug')],
+            'country_id' => ['required', 'exists:countries,id'],
+            'cover' => ['required', 'image', 'max:1000']
+        ]);
 
+        $blog = new Blog($request->only([
+            'title',
+            'slug',
+            'country_id',
+            'content'
+        ]));
+
+        $image = $request->file('cover');
+        $filename = time() . '.' . $image->guessExtension();
+        $path = $image->storeAs('blog/images/' . date('Ymd'), $filename);
+
+        $blog->cover = $path;
+        $blog->can_comment = $request->boolean('can_comment', false);
+        $blog->published_at = $request->boolean('published', false) ? Carbon::now() : null;
+        $blog->save();
+        $tags = $request->input('tags', []);
+        foreach ($tags as $t) {
+            $tag = Tag::query()->where('country_id', $blog->country_id)->where('name', $t)->first();
+            if (!$tag) {
+                $tag = new Tag(['name' => $t, 'country_id' => $blog->country_id]);
+                $tag->save();
+            }
+            $blog->tag($tag);
+        }
+        return back()->with('success', __('admin::admin.added_success'));
     }
 
     public function edit(Request $request, $id)
     {
+        abort_if(!$request->user()->canDo('blogs.edit'), 403);
 
     }
 
     public function update(Request $request, $id)
     {
+        abort_if(!$request->user()->canDo('blogs.edit'), 403);
 
     }
 
     public function destroy(Request $request, $id)
     {
+        abort_if(!$request->user()->canDo('blogs.destroy'), 403);
 
     }
 }

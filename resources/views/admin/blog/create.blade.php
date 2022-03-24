@@ -19,7 +19,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.blogs.store') }}" method="post">
+                    <form action="{{ route('admin.blogs.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @if(!empty(session('success')))
                             <div class="alert alert-success">
@@ -79,14 +79,23 @@
                                                value="{{ old('tag') }}"
                                                placeholder="{{ __('blog::blog.tag_placeholder') }}">
                                         <div class="mt-1 tags-box">
+                                            @unless(empty(old('tags')))
+                                                @foreach(old('tags') as $tag)
+                                                    <div
+                                                        class="badge bg-primary rounded-pill position-relative me-2 mt-2 tag-badge">
+                                                        {{ $tag }}<input type="hidden" name="tags[]"
+                                                                         value="{{ $tag }}"><span
+                                                            class="position-absolute top-0 start-100 translate-middle bg-danger border border-light rounded-circle mdi mdi-close tag-remove"></span>
+                                                    </div>
+                                                @endforeach
+                                            @endunless
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="can_comment"
-                                                   name="can_comment"
-                                                   tabindex="15"
-                                                   value="1">
+                                                   name="can_comment" tabindex="15"
+                                                   value="1" @if(old('can_comment')) checked @endif>
                                             <label for="can_comment"
                                                    class="form-check-label">{{ __('blog::blog.can_comment') }}</label>
                                         </div>
@@ -94,9 +103,8 @@
                                     <div class="col-12 mb-3">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="published"
-                                                   name="published"
-                                                   tabindex="15"
-                                                   value="1">
+                                                   name="published" tabindex="15"
+                                                   value="1" @if(old('published')) checked @endif>
                                             <label for="published"
                                                    class="form-check-label">{{ __('blog::blog.published') }}</label>
                                         </div>
