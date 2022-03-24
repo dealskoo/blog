@@ -23,6 +23,7 @@ class Blog extends Model
         'title',
         'cover',
         'content',
+        'published_at',
         'can_comment',
         'views',
         'country_id'
