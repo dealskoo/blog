@@ -144,6 +144,6 @@ class BlogController extends AdminController
     public function destroy(Request $request, $id)
     {
         abort_if(!$request->user()->canDo('blogs.destroy'), 403);
-
+        return ['status' => Blog::destroy($id)];
     }
 }
