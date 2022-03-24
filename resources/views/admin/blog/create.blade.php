@@ -130,6 +130,9 @@
                 height: 800,
                 watch: false,
                 path: path + "/lib/",
+                imageUpload: true,
+                imageFormats: ["jpg", "jpeg", "png", "bmp", "webp"],
+                imageUploadURL: "{{ route('admin.blogs.upload',['_token'=>csrf_token()]) }}",
                 toolbarIcons: function () {
                     return [
                         "undo", "redo", "|",
