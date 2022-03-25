@@ -4,6 +4,7 @@ return [
     'blogs_list' => 'Blogs List',
     'add_blog' => 'Add Blog',
     'edit_blog' => 'Edit Blog',
+    'view_blog' => 'View Blog',
     'id' => 'ID',
     'title' => 'Title',
     'country' => 'Country',
