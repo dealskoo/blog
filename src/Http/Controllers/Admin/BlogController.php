@@ -7,6 +7,7 @@ use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
 use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Blog\Models\Blog;
 use Dealskoo\Country\Models\Country;
+use Dealskoo\Tag\Facades\TagManager;
 use Dealskoo\Tag\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -116,14 +117,7 @@ class BlogController extends AdminController
         $blog->published_at = $request->boolean('published', false) ? Carbon::now() : null;
         $blog->save();
         $tags = $request->input('tags', []);
-        foreach ($tags as $t) {
-            $tag = Tag::query()->where('country_id', $blog->country_id)->where('name', $t)->first();
-            if (!$tag) {
-                $tag = new Tag(['name' => $t, 'country_id' => $blog->country_id]);
-                $tag->save();
-            }
-            $blog->tag($tag);
-        }
+        TagManager::sync($blog, $tags);
         return back()->with('success', __('admin::admin.added_success'));
     }
 
@@ -138,7 +132,31 @@ class BlogController extends AdminController
     public function update(Request $request, $id)
     {
         abort_if(!$request->user()->canDo('blogs.edit'), 403);
+        $request->validate([
+            'title' => ['required', 'string'],
+            'slug' => ['required', new Slug('blogs', 'slug', $id, 'id')],
+            'country_id' => ['required', 'exists:countries,id'],
+        ]);
+        $blog = Blog::query()->findOrFail($id);
+        $blog->fill($request->only([
+            'title',
+            'slug',
+            'country_id',
+            'content'
+        ]));
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover');
+            $filename = time() . '.' . $image->guessExtension();
+            $path = $image->storeAs('blog/images/' . date('Ymd'), $filename);
 
+            $blog->cover = $path;
+        }
+        $blog->can_comment = $request->boolean('can_comment', false);
+        $blog->published_at = $request->boolean('published', false) ? Carbon::now() : null;
+        $blog->save();
+        $tags = $request->input('tags', []);
+        TagManager::sync($blog, $tags);
+        return back()->with('success', __('admin::admin.update_success'));
     }
 
     public function destroy(Request $request, $id)

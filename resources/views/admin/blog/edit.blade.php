@@ -21,6 +21,7 @@
                 <div class="card-body">
                     <form action="{{ route('admin.blogs.update',$blog) }}" method="post" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         @if(!empty(session('success')))
                             <div class="alert alert-success">
                                 <p class="mb-0">{{ session('success') }}</p>
