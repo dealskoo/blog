@@ -27,10 +27,19 @@ class BlogFactory extends Factory
             'title' => $this->faker->title,
             'cover' => $this->faker->imageUrl,
             'content' => $this->faker->text,
-            'published_at' => $this->faker->dateTime,
+            'published_at' => null,
             'can_comment' => $this->faker->boolean,
             'views' => $this->faker->numberBetween(0, 1000),
             'country_id' => Country::factory()->create(),
         ];
+    }
+
+    public function published()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'published_at' => $this->faker->dateTime,
+            ];
+        });
     }
 }
