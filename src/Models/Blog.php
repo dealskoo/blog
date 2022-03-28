@@ -37,7 +37,7 @@ class Blog extends Model
 
     public function getCoverUrlAttribute()
     {
-        return empty($this->cover) ? asset('blog.default_cover') : Storage::url($this->cover);
+        return empty($this->cover) ? asset(config('blog.default_cover')) : Storage::url($this->cover);
     }
 
     public function scopePublished(Builder $builder)
