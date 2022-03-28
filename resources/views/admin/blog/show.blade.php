@@ -43,7 +43,7 @@
                         @endunless
                     </div>
                     <img src="{{ $blog->cover_url }}" class="img-fluid mb-2">
-                    <div class="mb-2">
+                    <div class="mb-2 markdown-body">
                         @unless(empty($blog->content))
                             {!! Str::markdown($blog->content) !!}
                         @endunless
@@ -52,4 +52,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('css')
+    <link href="{{ asset('/vendor/admin/css/vendor/github-markdown-light.css') }}" rel="stylesheet" type="text/css"/>
 @endsection
