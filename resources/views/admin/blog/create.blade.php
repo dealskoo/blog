@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div id="editor">
-                                            <textarea name="content"
+                                            <textarea name="content" tabindex="3"
                                                       style="display: none">{{ old('content') }}</textarea>
                                         </div>
                                     </div>
@@ -62,13 +62,13 @@
                                                  class="img-thumbnail file-pic file-cover">
                                             <div class="upload-image">
                                                 <i class="mdi mdi-cloud-upload upload-btn upload-cover-btn"></i>
-                                                <input class="file-input" name="cover" type="file" accept="image/*"/>
+                                                <input class="file-input" name="cover" tabindex="4" type="file" accept="image/*"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <select id="country_id" name="country_id" class="form-control select2"
-                                                data-toggle="select2" tabindex="3">
+                                                data-toggle="select2" tabindex="5">
                                             @foreach($countries as $country)
                                                 @if(old('country_id') == $country->id)
                                                     <option value="{{ $country->id }}"
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="col-12 mb-3">
                                         <input type="text" class="form-control tag-input" id="tag" name="tag"
-                                               value="{{ old('tag') }}"
+                                               value="{{ old('tag') }}" tabindex="6"
                                                placeholder="{{ __('blog::blog.tag_placeholder') }}">
                                         <div class="mt-1 tags-box">
                                             @unless(empty(old('tags')))
@@ -99,7 +99,7 @@
                                     <div class="col-12">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="can_comment"
-                                                   name="can_comment" tabindex="15"
+                                                   name="can_comment" tabindex="7"
                                                    value="1" @if(old('can_comment')) checked @endif>
                                             <label for="can_comment"
                                                    class="form-check-label">{{ __('blog::blog.can_comment') }}</label>
@@ -108,14 +108,14 @@
                                     <div class="col-12 mb-3">
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="published"
-                                                   name="published" tabindex="15"
+                                                   name="published" tabindex="8"
                                                    value="1" @if(old('published')) checked @endif>
                                             <label for="published"
                                                    class="form-check-label">{{ __('blog::blog.published') }}</label>
                                         </div>
                                     </div>
                                     <div class="text-end">
-                                        <button type="submit" class="btn btn-success mt-2" tabindex="16"><i
+                                        <button type="submit" class="btn btn-success mt-2" tabindex="9"><i
                                                 class="mdi mdi-content-save"></i> {{ __('admin::admin.save') }}
                                         </button>
                                     </div>
