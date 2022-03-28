@@ -93,12 +93,20 @@ class BlogController extends AdminController
     public function store(Request $request)
     {
         abort_if(!$request->user()->canDo('blogs.create'), 403);
-        $request->validate([
-            'title' => ['required', 'string'],
-            'slug' => ['required', new Slug('blogs', 'slug')],
-            'country_id' => ['required', 'exists:countries,id'],
-            'cover' => ['required', 'image', 'max:1000']
-        ]);
+        if ($request->hasFile('cover')) {
+            $request->validate([
+                'title' => ['required', 'string'],
+                'slug' => ['required', new Slug('blogs', 'slug')],
+                'country_id' => ['required', 'exists:countries,id'],
+                'cover' => ['required', 'image', 'max:1000']
+            ]);
+        } else {
+            $request->validate([
+                'title' => ['required', 'string'],
+                'slug' => ['required', new Slug('blogs', 'slug')],
+                'country_id' => ['required', 'exists:countries,id']
+            ]);
+        }
 
         $blog = new Blog($request->only([
             'title',
@@ -107,11 +115,12 @@ class BlogController extends AdminController
             'content'
         ]));
 
-        $image = $request->file('cover');
-        $filename = time() . '.' . $image->guessExtension();
-        $path = $image->storeAs('blog/images/' . date('Ymd'), $filename);
-
-        $blog->cover = $path;
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover');
+            $filename = time() . '.' . $image->guessExtension();
+            $path = $image->storeAs('blog/images/' . date('Ymd'), $filename);
+            $blog->cover = $path;
+        }
         $blog->can_comment = $request->boolean('can_comment', false);
         $blog->published_at = $request->boolean('published', false) ? Carbon::now() : null;
         $blog->save();
@@ -131,11 +140,20 @@ class BlogController extends AdminController
     public function update(Request $request, $id)
     {
         abort_if(!$request->user()->canDo('blogs.edit'), 403);
-        $request->validate([
-            'title' => ['required', 'string'],
-            'slug' => ['required', new Slug('blogs', 'slug', $id, 'id')],
-            'country_id' => ['required', 'exists:countries,id'],
-        ]);
+        if ($request->hasFile('cover')) {
+            $request->validate([
+                'title' => ['required', 'string'],
+                'slug' => ['required', new Slug('blogs', 'slug', $id, 'id')],
+                'country_id' => ['required', 'exists:countries,id'],
+                'cover' => ['required', 'image', 'max:1000']
+            ]);
+        } else {
+            $request->validate([
+                'title' => ['required', 'string'],
+                'slug' => ['required', new Slug('blogs', 'slug', $id, 'id')],
+                'country_id' => ['required', 'exists:countries,id'],
+            ]);
+        }
         $blog = Blog::query()->findOrFail($id);
         $blog->fill($request->only([
             'title',
