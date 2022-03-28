@@ -8,7 +8,6 @@ use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Blog\Models\Blog;
 use Dealskoo\Country\Models\Country;
 use Dealskoo\Tag\Facades\TagManager;
-use Dealskoo\Tag\Models\Tag;
 use Illuminate\Http\Request;
 
 class BlogController extends AdminController
