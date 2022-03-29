@@ -2,6 +2,7 @@
 
 namespace Dealskoo\Blog\Models;
 
+use Dealskoo\Admin\Traits\HasSlug;
 use Dealskoo\Comment\Traits\Commentable;
 use Dealskoo\Country\Traits\HasCountry;
 use Dealskoo\Tag\Traits\Taggable;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Blog extends Model
 {
-    use HasFactory, HasCountry, Taggable, Commentable, SoftDeletes;
+    use HasFactory, HasSlug, HasCountry, Taggable, Commentable, SoftDeletes;
 
     protected $appends = [
         'cover_url'
