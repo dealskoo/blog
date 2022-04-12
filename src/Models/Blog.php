@@ -11,13 +11,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Blog extends Model
 {
     use HasFactory, HasSlug, HasCountry, Taggable, Commentable, SoftDeletes;
 
     protected $appends = [
-        'cover_url'
+        'cover_url',
+        'summary'
     ];
 
     protected $fillable = [
@@ -44,5 +46,10 @@ class Blog extends Model
     public function scopePublished(Builder $builder)
     {
         return $builder->whereNotNull('published_at');
+    }
+
+    public function getSummaryAttribute()
+    {
+        return Str::limit(strip_tags(Str::markdown($this->content)), 100);
     }
 }
