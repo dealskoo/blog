@@ -54,6 +54,11 @@ class Blog extends Model
         return Str::limit(strip_tags(Str::markdown($this->content)), 100);
     }
 
+    public function shouldBeSearchable()
+    {
+        return $this->published_at ? true : false;
+    }
+
     public function toSearchableArray()
     {
         return $this->only([
