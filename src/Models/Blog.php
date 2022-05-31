@@ -12,10 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Blog extends Model
 {
-    use HasFactory, HasSlug, HasCountry, Taggable, Commentable, SoftDeletes;
+    use HasFactory, HasSlug, HasCountry, Taggable, Commentable, SoftDeletes, Searchable;
 
     protected $appends = [
         'cover_url',
@@ -51,5 +52,15 @@ class Blog extends Model
     public function getSummaryAttribute()
     {
         return Str::limit(strip_tags(Str::markdown($this->content)), 100);
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->only([
+            'slug',
+            'title',
+            'content',
+            'country_id'
+        ]);
     }
 }
