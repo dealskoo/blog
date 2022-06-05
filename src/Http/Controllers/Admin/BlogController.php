@@ -9,6 +9,7 @@ use Dealskoo\Blog\Models\Blog;
 use Dealskoo\Country\Models\Country;
 use Dealskoo\Tag\Facades\TagManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BlogController extends AdminController
 {
@@ -45,7 +46,7 @@ class BlogController extends AdminController
         foreach ($blogs as $blog) {
             $row = [];
             $row[] = $blog->id;
-            $row[] = '<img src="' . $blog->cover_url . '" alt="' . $blog->title . '" title="' . $blog->title . '" class="me-1"><p class="m-0 d-inline-block align-middle font-16">' . $blog->title . '</p>';
+            $row[] = '<img src="' . $blog->cover_url . '" alt="' . $blog->title . '" title="' . $blog->title . '" class="me-1"><p class="m-0 d-inline-block align-middle font-16">' . Str::words($blog->title, 5, '...') . '</p>';
             $row[] = $blog->country->name;
             $row[] = $blog->can_comment;
             $row[] = $blog->views;
