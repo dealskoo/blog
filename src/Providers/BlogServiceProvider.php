@@ -46,7 +46,7 @@ class BlogServiceProvider extends ServiceProvider
 
         AdminMenu::route('admin.blogs.index', 'blog::blog.blogs', [], ['icon' => 'uil-file-alt', 'permission' => 'blogs.index'])->order(4);
 
-        PermissionManager::add(new Permission('blogs.index', 'Blog Lists'));
+        PermissionManager::add(new Permission('blogs.index', 'Blog List'));
         PermissionManager::add(new Permission('blogs.create', 'Create Blog'), 'blogs.index');
         PermissionManager::add(new Permission('blogs.show', 'View Blog'), 'blogs.index');
         PermissionManager::add(new Permission('blogs.edit', 'Edit Blog'), 'blogs.index');
