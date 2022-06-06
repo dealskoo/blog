@@ -30,7 +30,7 @@ class BlogFactory extends Factory
             'published_at' => null,
             'can_comment' => $this->faker->boolean,
             'views' => $this->faker->numberBetween(0, 1000),
-            'country_id' => Country::factory()->create(),
+            'country_id' => Country::factory(),
         ];
     }
 
