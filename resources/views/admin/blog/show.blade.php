@@ -22,10 +22,10 @@
                 <div class="card-body">
                     <h3>{{ $blog->title }}</h3>
                     <div>
-                        <span>{{ __('blog::blog.updated_at') }}: {{ \Carbon\Carbon::parse($blog->updated_at)->diffForHumans() }}</span>
+                        <span>{{ __('blog::blog.updated_at') }}: {{ $blog->updated_at->diffForHumans() }}</span>
                         @isset($blog->published_at)
                             <span
-                                class="ms-2">{{ __('blog::blog.published_at') }}: {{ \Carbon\Carbon::parse($blog->published_at)->diffForHumans() }}</span>
+                                class="ms-2">{{ __('blog::blog.published_at') }}: {{ $blog->published_at->diffForHumans() }}</span>
                         @endisset
                         <span class="ms-2">{{ __('blog::blog.country') }}: {{ $blog->country->name }}</span>
                         @if($blog->can_comment)

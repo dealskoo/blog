@@ -50,9 +50,9 @@ class BlogController extends AdminController
             $row[] = $blog->country->name;
             $row[] = $blog->can_comment;
             $row[] = $blog->views;
-            $row[] = $blog->published_at != null ? Carbon::parse($blog->published_at)->format('Y-m-d H:i:s') : null;
-            $row[] = Carbon::parse($blog->created_at)->format('Y-m-d H:i:s');
-            $row[] = Carbon::parse($blog->updated_at)->format('Y-m-d H:i:s');
+            $row[] = $blog->published_at != null ? $blog->published_at->format('Y-m-d H:i:s') : null;
+            $row[] = $blog->created_at->format('Y-m-d H:i:s');
+            $row[] = $blog->updated_at->format('Y-m-d H:i:s');
             $view_link = '';
             if ($can_view) {
                 $view_link = '<a href="' . route('admin.blogs.show', $blog) . '" class="action-icon"><i class="mdi mdi-eye"></i></a>';
