@@ -2,7 +2,6 @@
 
 namespace Dealskoo\Blog\Http\Controllers\Admin;
 
-use Carbon\Carbon;
 use Dealskoo\Admin\Http\Controllers\Controller as AdminController;
 use Dealskoo\Admin\Rules\Slug;
 use Dealskoo\Blog\Models\Blog;
@@ -123,7 +122,7 @@ class BlogController extends AdminController
             $blog->cover = $path;
         }
         $blog->can_comment = $request->boolean('can_comment', false);
-        $blog->published_at = $request->boolean('published', false) ? Carbon::now() : null;
+        $blog->published_at = $request->boolean('published', false) ? now() : null;
         $blog->save();
         $tags = $request->input('tags', []);
         TagManager::sync($blog, $tags);
@@ -170,7 +169,7 @@ class BlogController extends AdminController
             $blog->cover = $path;
         }
         $blog->can_comment = $request->boolean('can_comment', false);
-        $blog->published_at = $request->boolean('published', false) ? Carbon::now() : null;
+        $blog->published_at = $request->boolean('published', false) ? now() : null;
         $blog->save();
         $tags = $request->input('tags', []);
         TagManager::sync($blog, $tags);
