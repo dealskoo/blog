@@ -5,7 +5,10 @@ namespace Dealskoo\Blog\Models;
 use Dealskoo\Admin\Traits\HasSlug;
 use Dealskoo\Comment\Traits\Commentable;
 use Dealskoo\Country\Traits\HasCountry;
+use Dealskoo\Favorite\Traits\Favoriteable;
+use Dealskoo\Like\Traits\Likeable;
 use Dealskoo\Tag\Traits\Taggable;
+use Dealskoo\Thumb\Traits\Thumbable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +19,7 @@ use Laravel\Scout\Searchable;
 
 class Blog extends Model
 {
-    use HasFactory, HasSlug, HasCountry, Taggable, Commentable, SoftDeletes, Searchable;
+    use HasFactory, HasSlug, HasCountry, Taggable, Commentable, Likeable, Favoriteable, Thumbable, SoftDeletes, Searchable;
 
     protected $appends = [
         'cover_url',
