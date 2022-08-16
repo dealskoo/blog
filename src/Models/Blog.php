@@ -39,7 +39,7 @@ class Blog extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
-        'can_comment' => 'boolean111',
+        'can_comment' => 'boolean',
     ];
 
     public function getCoverUrlAttribute()
