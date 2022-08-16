@@ -54,7 +54,7 @@ class Blog extends Model
 
     public function getSummaryAttribute()
     {
-        return Str::limit(strip_tags(Str::markdown($this->content)), 100);
+        return !empty($this->content) ? Str::limit(strip_tags(Str::markdown($this->content)), 100) : '';
     }
 
     public function shouldBeSearchable()
