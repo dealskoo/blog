@@ -45,7 +45,7 @@ class BlogController extends AdminController
         foreach ($blogs as $blog) {
             $row = [];
             $row[] = $blog->id;
-            $row[] = '<img src="' . $blog->cover_url . '" alt="' . $blog->title . '" title="' . $blog->title . '" class="me-1"><p class="m-0 d-inline-block align-middle font-16">' . Str::words($blog->title, 5, '...') . '</p>';
+            $row[] = '<img src="' . $blog->cover_url . '" class="me-1"><p class="m-0 d-inline-block align-middle font-16" title="'.$blog->title.'">' . Str::words($blog->title, 18, '...') . '</p>';
             $row[] = $blog->country->name;
             $row[] = $blog->can_comment;
             $row[] = $blog->views;
@@ -143,12 +143,22 @@ class BlogController extends AdminController
         if ($request->hasFile('cover')) {
             $request->validate([
                 'title' => ['required', 'string'],
+                'seo_title' => ['string'],
+                'seo_url' => ['string'],
+                'seo_h1' => ['string'],
+                'seo_keywords' => ['string'],
+                'seo_description' => ['string'],
                 'slug' => ['required', new Slug('blogs', 'slug', $id, 'id')],
                 'country_id' => ['required', 'exists:countries,id'],
                 'cover' => ['required', 'image', 'max:1000']
             ]);
         } else {
             $request->validate([
+                'seo_title' => ['string'],
+                'seo_url' => ['string'],
+                'seo_h1' => ['string'],
+                'seo_keywords' => ['string'],
+                'seo_description' => ['string'],
                 'title' => ['required', 'string'],
                 'slug' => ['required', new Slug('blogs', 'slug', $id, 'id')],
                 'country_id' => ['required', 'exists:countries,id'],
@@ -159,7 +169,12 @@ class BlogController extends AdminController
             'title',
             'slug',
             'country_id',
-            'content'
+            'content',
+            'seo_title',
+            'seo_url',
+            'seo_h1',
+            'seo_keywords',
+            'seo_description'
         ]));
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');

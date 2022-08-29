@@ -47,6 +47,31 @@
                                                value="{{ old('slug',$blog->slug) }}" tabindex="2"
                                                placeholder="{{ __('blog::blog.slug_placeholder') }}">
                                     </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="seo_title" name="seo_title" required
+                                               value="{{ old('seo_title',$blog->seo_title) }}" tabindex="2"
+                                               placeholder="seo_title">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="seo_keywords" name="seo_keywords" required
+                                               value="{{ old('seo_keywords',$blog->seo_keywords) }}" tabindex="2"
+                                               placeholder="seo_keywords">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="seo_description" name="seo_description" required
+                                               value="{{ old('seo_description',$blog->seo_description) }}" tabindex="2"
+                                               placeholder="seo_description">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="seo_h1" name="seo_h1" required
+                                               value="{{ old('seo_h1',$blog->seo_h1) }}" tabindex="2"
+                                               placeholder="seo_h1">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <input type="text" class="form-control" id="seo_url" name="seo_url" required
+                                               value="{{ old('seo_url',$blog->seo_url) }}" tabindex="2"
+                                               placeholder="seo_url">
+                                    </div>
                                     <div class="col-12">
                                         <div id="editor">
                                             <textarea name="content" tabindex="3"
